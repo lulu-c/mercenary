@@ -1,3 +1,5 @@
 exports.render = function(req, res){
-  res.send('Hello');
+  res.render('index', {
+  	title: 'Mercenary'
+  });
 };
