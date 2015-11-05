@@ -1,10 +1,11 @@
-var 
+var
+  config = require('./config'), 
   express = require('express'),  // 
   morgan = require('morgan'),  // 提供简单的日志中间件
   compress = require('compression'),  // 提供响应内容的压缩功能
   bodyParser = require('body-parser'),  // 包含几个处理请求数据的中间件
-  methodOverride = require('method-override');  // 提供了对HTTP DELETE和PUT两个遗留方法的支持
-
+  methodOverride = require('method-override'),  // 提供了对HTTP DELETE和PUT两个遗留方法的支持
+  session = require('express-session');
 
 
 
@@ -22,6 +23,12 @@ module.exports = function(){
   }));
   app.use(bodyParser.json());
   app.use(methodOverride());
+
+  app.use(session({
+    saveUninitialized:true,
+    resave:true,
+    secret:config.sessionSecret
+  }));
 
   app.set('views','./app/views');	//设置视图文件的存储目录
   app.set('view engine', 'ejs');  //设置EJS作为Express应用的模板引擎
