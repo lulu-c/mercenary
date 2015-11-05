@@ -5,6 +5,7 @@ exports.render = function(req, res){
   req.session.lastVisit = new Date();  //记录最后一次请求时间
 
   res.render('index', {
-  	title: 'Mercenary'
+  	title: 'Mercenary',
+  	user: req.user ? req.user : ''
   });
 };
