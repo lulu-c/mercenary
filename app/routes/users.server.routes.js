@@ -13,22 +13,22 @@ module.exports = function(app){
      .get(users.renderSignin)
      .post(passport.authenticate('local', {
      		successRedirect: '/',
-     		failureRedirect: '/',
+     		failureRedirect: '/signin',
      		failureFlash: true  //是否使用flash消息
      }));
 
   // 登出路由设置 
   app.get('/signout', users.signout);
 
+  app.route('/merchants')
+     .get(users.getIdentity, users.listByIdentity, users.renderMerchants);
 
-  // app.route('/users')
-  // 	 .post(users.create)
-  // 	 .get(users.list);
+  app.route('/merchants/:merchantId')
+     .get(users.requiresLogin, users.hasAuthorization, users.renderMerchantUpdate)
+     .post(users.requiresLogin, users.hasAuthorization, users.getIdentity, users.updateMerchant);
 
-  // app.route('/users/:userId')
-  // 	 .get(users.read)
-  // 	 .put(users.update)
-  // 	 .delete(users.delete);
+  app.route('/merchants/:merchantId/delete')
+     .get(users.requiresLogin, users.hasAuthorization, users.deleteMerchant, users.renderMerchants);
 
-  // app.param('userId', users.userById);
+  app.param('merchantId', users.merchantByID);
 };

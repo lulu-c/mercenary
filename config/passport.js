@@ -12,7 +12,7 @@ module.exports = function(){
   passport.deserializeUser(function(id, done){
   	User.findOne({
   		_id: id
-  	}, '-password -salt', function(err, user){  //传入-password -salt参数防止读取password和salt属性
+  	}, '-password -passwordHash -salt', function(err, user){  //传入-password -salt参数防止读取password和salt属性
   		done(err, user);
   	});
   });

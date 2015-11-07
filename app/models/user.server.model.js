@@ -17,6 +17,9 @@ var UserSchema = new Schema({  //使用模式构造器定义了UserSchema对象�
   	  }, 'password should be longer'
   	]
   },
+  passwordHash: {
+    type: String
+  },
   name: {  //昵称
   	type: String,
   	trim: true
@@ -40,14 +43,10 @@ var UserSchema = new Schema({  //使用模式构造器定义了UserSchema对象�
   providerData: {}  //用于存储从OAuth提供方获取的用户信息
 });
 
-// UserSchema.virtual('name').get(function(){
-//   return this.name;
-// });
-
 UserSchema.pre('save', function(next){  
 	if(this.password){
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');  //用伪随机方法生成了一个盐
-		this.password = this.hashPassword(this.password);  //用实例方法对原密码执行哈希操作
+		this.passwordHash = this.hashPassword(this.password);  //用实例方法对原密码执行哈希操作
 	}
 	next();
 });
@@ -59,7 +58,7 @@ UserSchema.methods.hashPassword = function(password){
 
 // 将接收的参数字符串的哈希结果与数据库中存储的用户密码哈希值进行比较
 UserSchema.methods.authenticate = function(password){
-  return this.password == this.hashPassword(password);
+  return this.passwordHash == this.hashPassword(password);
 };
 
 // 为用户确定一个唯一可用的用户名
@@ -81,11 +80,5 @@ UserSchema.statics.findUniqueUsername = function(username, suffix, callback){
   	}
   });
 };
-
-
-// UserSchema.set('toJSON', {
-//   getters: true,
-//   virtuals: true
-// });
 
 mongoose.model('User', UserSchema);  //使用模式实例定义了User模型

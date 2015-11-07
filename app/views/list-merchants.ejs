@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <script type="text/javascript" src="/js/moment.min.js"></script>
+  </head>
+  <body>
+  
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+	      <ul class="nav nav-pills pull-right">
+	        <li role="presentation" class="active"><a href="/index">主页</a></li>
+	        <li role="presentation"><a href="/signout">退出</a></li>
+	      </ul>
+	    </nav>
+	    <h3 class="text-muted">
+	    	<b>刷天下</b>
+	    	<small>
+	    		<span>欢迎回来,</span>
+	    		<span class="text-primary"><%= user.name %></span> | 
+	    		<span class="text-primary"><%= user.identity %></span>
+	    	</small>
+	    </h3>
+      </div>
+
+
+      <div>
+		<ul class="nav nav-tabs nav-justified">
+		  <li role="presentation" class="active">
+			<a href="/merchants" data-toggle="tab">账号管理</a>
+		  </li>
+		  <li role="presentation">
+			<a href="/assign" data-toggle="tab">任务分配</a>
+		  </li>
+		  <li role="presentation">
+			<a href="#school-comment" data-toggle="tab">商家管理</a>
+		  </li>
+		  <li role="presentation">
+			<a href="#school-comment" data-toggle="tab">主持管理</a>
+		  </li>
+		</ul>
+
+		<div class="row">
+	  	  <div class="col-md-2">
+			<div class="list-group">
+				<a href="chaoyou.html" class="list-group-item   active"><span class="glyphicon glyphicon-option-vertical"></span>商家</a>
+				<a href="" class="list-group-item"><span class="glyphicon glyphicon-paperclip"></span>主持</a>
+				<a href="" class="list-group-item"><span class="glyphicon glyphicon-paperclip"></span>管理员</a>
+				<a href="" class="list-group-item"><span class="glyphicon glyphicon-paperclip"></span>新增账号</a>
+			</div>
+	  	  </div>
+	  	  <div class="col-md-10">
+	  	  	<div class="panel panel-default">
+				<div class="panel-heading">
+					<ol class="breadcrumb">
+						<li><a href="chaoyou.html">商家</a></li>
+						<li><a href="chaoyou-ten.html"><%= title %></a></li>
+					</ol>
+				</div>
+				<ul class="list-group" id="person">
+					<li class="list-group-item">
+						<table class="table table-striped">
+						  <tr>
+						  	<th>编号</th>
+						  	<th>商家</th>
+						  	<th>加入时间</th>
+						  	<th>账号</th>
+						  	<th>密码</th>
+						  	<th>操作</th>
+						  </tr>
+						  <% for(var i=0; i<merchants.length; i++){ %>
+						  <tr>
+						  	<td><%= i+1 %></td>
+						  	<td><%= merchants[i].name %></td>
+						  	<td><%= merchants[i].join %></td>
+						  	<td><%= merchants[i].username %></td>
+						  	<td><%= merchants[i].password %></td>
+						  	<td><a href="/merchants/<%= merchants[i]._id %>">修改</a> | <a href="/merchants/<%= merchants[i]._id %>/delete">删除</a></td>
+						  </tr>
+						  <% } %>
+						</table>
+					</li>
+				</ul>
+			</div>
+	  	  </div>
+		</div>
+
+	  </div>
+
+
+      <footer class="footer">
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+
+
+
+
+    <% if(merchants){ %>
+      
+	<% } %>
+
+
+	<script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
