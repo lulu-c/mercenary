@@ -1,12 +1,13 @@
 var 
   users = require('../../app/controllers/users.server.controller'),
+  relations = require('../../app/controllers/relations.server.controller'),
   passport = require('passport');
 
 module.exports = function(app){
 	// 注册路由设置
   app.route('/signup')
      .get(users.renderSignup)
-     .post(users.signup);
+     .post(users.signup, relations.create);
 
   // 登录路由设置
   app.route('/signin')

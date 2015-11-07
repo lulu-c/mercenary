@@ -1,5 +1,6 @@
 var 
   User = require('mongoose').model('User'),  //返回创建的User模型
+  Relation = require('mongoose').model('Relation'), 
   crypto = require('crypto'),
   passport = require('passport'),
   moment = require('moment');
@@ -76,13 +77,15 @@ exports.signup = function(req, res, next){
 					if(err){
 						return next(err);
 					}
-					return res.redirect('/');
+					// return res.redirect('/');
+					next();
 				});
 			});
 	}else{
 		return res.redirect('/');
 	}
 };
+
 
 // 退出业务逻辑处理
 exports.signout = function(req, res){
@@ -121,12 +124,10 @@ exports.listByIdentity = function(req, res, next){
 				message: getErrorMessage(err)
 			});
 		}else{
-			// res.json(users);
 			req.merchants = users;
 			next();
 		}
 	});
-	// return users;
 };
 
 //通过id获取文档
@@ -154,16 +155,6 @@ exports.renderMerchants = function(req, res, next){
 		messages: req.flash('error')  //读取flash区域中所存储的消息
 	});
 };
-
-// 渲染视图：商家信息
-// exports.renderMerchant = function(req, res, next){
-// 	res.render('update-merchant', {
-// 		title: '修改信息',
-// 		user: req.user ? req.user : '',
-// 		merchant: req.merchant,
-// 		messages: req.flash('error')  //读取flash区域中所存储的消息
-// 	});
-// };
 
 // 渲染视图：修改商家信息
 exports.renderMerchantUpdate = function(req, res, next){

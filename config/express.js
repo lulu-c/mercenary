@@ -41,6 +41,7 @@ module.exports = function(){
 
   require('../app/routes/index.server.routes.js')(app);
   require('../app/routes/users.server.routes.js')(app);
+  require('../app/routes/relations.server.routes.js')(app);
 
   app.use(express.static('./public'));  //先执行路由逻辑，若没有响应请求，再由静态文件服务进行处理
   return app;
